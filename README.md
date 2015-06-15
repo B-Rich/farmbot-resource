@@ -1,10 +1,13 @@
 # Farmbot Resource
 
-Adapter gem for Farmbot Web App API
+Adapter gem for Farmbot Web App API. Currently used in Raspberry Pi controller to support scheduling operations.
 
-# Note
+# Available Resources
 
-This Gem is not in a working state. It is in a public pre-alpha.
+ * Sequences
+ * Schedules
+
+Need more than what's available? Raise an issue.
 
 # Usage
 
@@ -13,18 +16,14 @@ client = FbResource::Client.new do |config|
   config.uuid  = 'xyxyxyxy-1234-5678-5345-453453453453'
   config.token = '229458cgsdfgsdfgsdfaasdfasdfasdfasdfasda'
   config.url   = 'http://my.farmbot.it'
-  config.on_load do |client|
-    # Load any objects that you persisted elsewhere
-  end
 end
 
-schedules = client.schedules
+# Simple use case: get all schedules
+# Returns array of hashes
+schedules = client.schedules.all
 
-# get a step from a sequence from a step
-sequence  = schedules
-              .first
-              .sequence
-              .steps
-              .first
+# Another use case: cache busting with fetch()
+# Results are always cached until fetch() is called
+sequences = client.sequences.fetch.all
 
 ```

@@ -1,6 +1,6 @@
-require_relative 'http/abstract_resp'
-require_relative 'http/bad_http_resp'
-require_relative 'http/good_http_resp'
+require_relative 'abstract_resp'
+require_relative 'bad_http_resp'
+require_relative 'good_http_resp'
 
 module FbResource
   class Http
