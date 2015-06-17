@@ -20,12 +20,17 @@ module FbResource
     def fetch
         Http
           .get(conf.url + self.class.path, conf.creds)
-          .no { |e| no(e) }
+          .no { |obj, req, res| fetch_no(obj, req, res) }
           .ok { |obj, req, res| fetch_ok(obj, req, res) }
     end
 
-    def no(error)
-      raise FetchError, "Error fetching #{self.class.to_s}: #{error.message}"
+    def fetch_no(obj, req, res)
+      raise FetchError, """
+      Error Fetching Farmbot resource:
+      #{obj || "\n"}
+      #{req.try(:url)}
+      #{res.try(:message)}
+      #{res.class}""".squeeze
     end
 
     def fetch_ok(obj, request, response)
