@@ -6,6 +6,7 @@ Adapter gem for Farmbot Web App API. Currently used in Raspberry Pi controller t
 
  * Sequences
  * Schedules
+ * Plants
 
 Need more than what's available? Raise an issue.
 

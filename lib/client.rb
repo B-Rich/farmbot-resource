@@ -16,5 +16,9 @@ module FbResource
     def sequences
       @sequences ||= FbResource::Sequences.new(config)
     end
+
+    def plants
+      @plants ||= FbResource::Plants.new(config)
+    end
   end
 end
