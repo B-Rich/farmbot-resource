@@ -19,7 +19,7 @@ module FbResource
 
     def fetch
         Http
-          .get(conf.url + self.class.path, conf.creds)
+          .get(conf.url + self.class.path, conf.http_headers)
           .no { |obj, req, res| fetch_no(obj, req, res) }
           .ok { |obj, req, res| fetch_ok(obj, req, res) }
     end

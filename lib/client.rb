@@ -9,6 +9,17 @@ module FbResource
       yield(@config)
     end
 
+    def self.get_token(url: "http://my.farmbot.io", email:, password:)
+      # TODO handle auth errors in a more civilized manner.
+      resource_url = url + "/api/tokens"
+      payload = {user: {email: email, password: password}}
+      result = RestClient.post(resource_url, payload)
+      json = JSON.parse(result)
+      token = json["token"]
+      string = token["encoded"]
+      string
+    end
+
     def schedules
       @schedules ||= FbResource::Schedules.new(config)
     end
