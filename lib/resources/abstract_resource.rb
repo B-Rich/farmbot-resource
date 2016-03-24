@@ -25,12 +25,12 @@ module FbResource
     end
 
     def fetch_no(obj, req, res)
-      raise FetchError, """
-      Error Fetching Farmbot resource:
-      #{obj || "\n"}
-      #{req.try(:url)}
-      #{res.try(:message)}
-      #{res.class}""".squeeze
+      raise FetchError, """\n
+      Error Fetching Farmbot resource:\n
+      #{obj || "\n"}\n
+      #{req && req.url}\n
+      #{res && res.message}\n
+      #{res && res.class}\n"""
     end
 
     def fetch_ok(obj, request, response)

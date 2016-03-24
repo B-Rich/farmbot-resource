@@ -19,3 +19,6 @@ client.plants.all # => []
 
 puts ("Grabbing sequences")
 client.sequences.all # => []
+
+puts ("Grabbing devices")
+puts client.device.current # => []

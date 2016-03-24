@@ -23,6 +23,10 @@ module FbResource
       string
     end
 
+    def device
+      @device ||= FbResource::Device.new(config)
+    end
+
     def schedules
       @schedules ||= FbResource::Schedules.new(config)
     end
