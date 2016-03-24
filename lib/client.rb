@@ -1,12 +1,15 @@
 require_relative 'config'
+require 'base64'
 
 module FbResource
+  class InvalidConfig < StandardError; end
   class Client
     attr_reader :config
 
     def initialize(&blk)
       @config = Config.build
       yield(@config)
+      post_config
     end
 
     def self.get_token(url: "http://my.farmbot.io", email:, password:)
@@ -30,6 +33,21 @@ module FbResource
 
     def plants
       @plants ||= FbResource::Plants.new(config)
+    end
+
+    def api_url
+      JSON.parse(Base64.decode64(config.token.split(".")[1]))["iss"]
+    end
+
+  private
+
+    def invalidate(msg)
+      raise InvalidConfig.new, msg
+    end
+
+    def post_config
+      invalidate("config needs `token` attribute") unless @config.token
+      @config.url = api_url
     end
   end
 end

@@ -28,7 +28,6 @@ Once you have an API token, you can create a 'client'.
 ```ruby
 client = FbResource::Client.new do |config|
   config.token = token
-  config.url   = 'http://my.farmbot.it'
 end
 ```
 

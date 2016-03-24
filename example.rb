@@ -6,6 +6,16 @@ token = FbResource::Client.get_token(email: 'admin@admin.com',
                                      url: "http://localhost:3000")
 
 client = FbResource::Client.new do |config|
- config.token = token
- config.url   = 'http://localhost:3000'
+  # Note for users that self host a Farmbot API:
+  # FbResource will grab the URL from the token's "ISS" claim.
+  config.token = token
 end
+
+puts ("Grabbing schedules")
+client.schedules.all # => []
+
+puts ("Grabbing plants")
+client.plants.all # => []
+
+puts ("Grabbing sequences")
+client.sequences.all # => []
