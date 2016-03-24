@@ -8,7 +8,7 @@ Adapter gem for Farmbot Web App API. Currently used in Raspberry Pi controller t
  * Schedules
  * Plants
 
-Need more than what's available? Raise an issue.
+Need more than what's available? Raise an issue and we can add your resource to the list (PRs are also welcome).
 
 # Usage
 
@@ -17,7 +17,8 @@ First, you will need an API token.
 ```ruby
 token = FbResource::Client.get_token(email: 't@g.com',
                                      password: 'shhh...',
-                                     # Defaults to "my.farmbot.io" if not specified.
+                                     # OPTIONAL: Defaults to "my.farmbot.io"
+                                     # if not specified.
                                      url: "http://localhost:3000")
 # Returns really long JSON Web Token...
 # => 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9....'
@@ -43,3 +44,5 @@ schedules = client.schedules.all
 sequences = client.sequences.fetch.all
 
 ```
+
+**See example.rb for a runnable sample**.
