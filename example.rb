@@ -11,14 +11,13 @@ client = FbResource::Client.new do |config|
   config.token = token
 end
 
-puts ("Grabbing schedules")
-client.schedules.all # => []
-
-puts ("Grabbing plants")
-client.plants.all # => []
-
-puts ("Grabbing sequences")
-client.sequences.all # => []
-
-puts ("Grabbing devices")
-puts client.device.current # => []
+puts("Grabbing schedules")
+puts client.schedules.all.to_s
+puts("Grabbing plants")
+puts client.plants.all.to_s
+puts("Grabbing sequences")
+puts client.sequences.all.to_s
+puts("Grabbing devices")
+puts client.device.current.to_s
+puts "Grabbing public key"
+puts client.public_key.to_pem
