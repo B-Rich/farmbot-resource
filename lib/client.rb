@@ -28,13 +28,12 @@ module FbResource
 
     # Useful when you need to sign arbitrary secrets and give them to the server
     def public_key
-      if @public_key
-        return @public_key
-      else
-        api_url = config.url + "api/public_key"
-        pem = Http.get(api_url, {}).body
-        @public_key = OpenSSL::PKey::RSA.new(pem)
-      end
+      @public_key ||= self.class.public_key(config.url)
+    end
+
+    def self.public_key(url = "my.farmbot.io")
+      pem = Http.get(url + "/api/public_key", {}).body
+      @public_key = OpenSSL::PKey::RSA.new(pem)
     end
 
     def device
