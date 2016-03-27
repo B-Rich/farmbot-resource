@@ -32,8 +32,12 @@ module FbResource
     end
 
     def self.public_key(url = "my.farmbot.io")
-      pem = Http.get(url + "/api/public_key", {}).body
-      @public_key = OpenSSL::PKey::RSA.new(pem)
+      wow = Http.get(url + "/api/public_key", {})
+      if wow.response.code.to_i < 400
+        return OpenSSL::PKey::RSA.new(wow.body)
+      else
+        raise "Unable to fetch public key. Is the server down?"
+      end
     end
 
     def device
