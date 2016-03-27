@@ -42,7 +42,10 @@ schedules = client.schedules.all
 # Another use case: cache busting with fetch()
 # Results are always cached until fetch() is called
 sequences = client.sequences.fetch.all
-
 ```
+
+# Encryption
+
+The Farmbot web app issues an RSA public key. If you need to sign stuff, the key is accessible via `client.public_key` 
 
 **See example.rb for a runnable sample**.

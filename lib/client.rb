@@ -12,15 +12,18 @@ module FbResource
       post_config
     end
 
-    def self.get_token(url: "http://my.farmbot.io", email:, password:)
+    def self.get_token(url: "http://my.farmbot.io",
+                       email: "EMAIL NOT SET",
+                       password: "PASSWORD NOT SET",
+                       credentials: nil)
       # TODO handle auth errors in a more civilized manner.
       resource_url = url + "/api/tokens"
-      payload = {user: {email: email, password: password}}
-      result = RestClient.post(resource_url, payload)
-      json = JSON.parse(result)
-      token = json["token"]
-      string = token["encoded"]
-      string
+      if(credentials)
+        result = from_credentials(resource_url, credentials)
+      else
+        result = from_email_and_password(resource_url, email, password)
+      end
+      parse_token(result)
     end
 
     # Useful when you need to sign arbitrary secrets and give them to the server
@@ -51,7 +54,14 @@ module FbResource
     end
 
     def api_url
-      JSON.parse(Base64.decode64(config.token.split(".")[1]))["iss"]
+      raw = config.token.split(".")[1]
+      token_string = Base64.decode64(raw)
+      hash = JSON.parse(token_string)
+      hash["iss"]
+    rescue JSON::ParserError
+      msg = "Farmbot Resource couldn't parse the auth token provided:\n\n"
+      msg += token_string + "\n\n"
+      raise InvalidConfig, msg
     end
 
   private
@@ -63,6 +73,23 @@ module FbResource
     def post_config
       invalidate("config needs `token` attribute") unless @config.token
       @config.url = api_url
+    end
+
+    def self.from_credentials(resource_url, credentials)
+      payload = {user: {credentials: credentials}}
+      RestClient.post(resource_url, payload)
+    end
+
+    def self.from_email_and_password(resource_url, email, password)
+      payload = {user: {email: email, password: password}}
+      RestClient.post(resource_url, payload)
+    end
+
+    def self.parse_token(result)
+      json = JSON.parse(result)
+      token = json["token"]
+      string = token["encoded"]
+      string
     end
   end
 end
