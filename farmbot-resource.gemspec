@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = "farmbot-resource"
-  spec.version       = '1.0.0'
+  spec.version       = '1.1.0'
   spec.authors       = ["Rick Carlino"]
   spec.email         = ["rick.carlino@gmail.com"]
   spec.description   = "REST API adapter for Farmbot web app."
