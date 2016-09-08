@@ -57,7 +57,7 @@ module FbResource
     end
 
     def api_url
-      raw = config.token.split(".")[1]
+      raw = config.token.split(".")[1] + "=="
       token_string = Base64.decode64(raw)
       hash = JSON.parse(token_string)
       hash["iss"]
